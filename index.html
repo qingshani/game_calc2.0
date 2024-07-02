@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <title>Document</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 微软雅黑;
+            color: #FBFBFE;
+        }
+
+        *:not(input) {
+            user-select: none;
+        }
+
+        html {
+            width: 100vw;
+            height: 100vh;
+            background-color: #1C1B22;
+        }
+
+        body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        h6 {
+            text-align: center;
+        }
+
+        #box {
+            position: relative;
+            /* background-color: red; */
+            width: 25em;
+            /* background-color: red; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 50px 0;
+            box-shadow: 0px 0px 1px #6a6767;
+
+            border-radius: 5px;
+            min-height: 250px;
+        }
+
+        #box div {
+            margin: 5px 0;
+        }
+
+        #box div:nth-child(3) span {
+            transform: rotate(90deg);
+            display: block;
+        }
+
+        #box input {
+            color: #1C1B22;
+            background-color: #2b2a2d;
+            outline: none;
+            border: none;
+            height: 30px;
+            padding: 0 5px;
+            width: 20em;
+            color: #FBFBFE;
+            text-indent: 1em;
+        }
+
+        #statistical div span {
+            color: gray;
+        }
+
+        #statistical div {
+            display: flex;
+            justify-content: space-around;
+            /* background-color: red; */
+            align-items: center;
+            width: 25em;
+            margin: 12px;
+
+        }
+
+        #info {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: none;
+            text-align: right;
+        }
+
+        #help {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-style: normal;
+            width: 20px;
+            height: 20px;
+            background-color: #3a393a;
+            border-radius: 3px;
+            color: #b4b1b1;
+        }
+
+        #help:hover {
+            background-color: #717171;
+            color: #fff;
+            box-shadow: 0 0 3px #fff;
+        }
+
+        #select_mode {
+            display: flex;
+
+        }
+
+        #select_mode span {
+            color: #717171;
+        }
+
+        #select_mode i {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-style: normal;
+            width: 20px;
+            height: 20px;
+            background-color: #282828;
+            margin: 0 5px;
+            color: #717171;
+        }
+
+        #select_mode i:hover {
+            background-color: #717171;
+            color: #fff;
+            box-shadow: 0 0 3px #fff;
+        }
+
+        .aced {
+            background-color: #454444 !important;
+            color: #717171 !important;
+            box-shadow: 0 0 3px rgb(89, 87, 87) !important;
+        }
+
+        #start {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        #start button {
+            width: 5em;
+            height: 2em;
+            margin-top: 10px;
+            background-color: #1C1B22;
+            outline: none;
+            border: none;
+        }
+
+        #start button:hover {
+            background-color: #2b2a2d;
+            cursor: pointer;
+        }
+
+        #daojishi {
+            background-color: red;
+            width: 5em;
+            height: 5em;
+            position: absolute;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            box-sizing: border-box;
+            background-color: rgba(0, 0, 0, .8);
+            border-radius: 15px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 1);
+            display: none;
+        }
+
+        #setting {
+            color: #b6b5b5;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(103, 103, 103, .2);
+            z-index: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            display: none;
+        }
+
+        #options {
+            padding: 10px 20px 0;
+            box-sizing: border-box;
+            width: 28em;
+            min-height: 30em;
+            background-color: #1C1B22;
+            color: inherit;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #1C1B22;
+        }
+
+        #options div {
+            margin: 0 5px;
+            padding: 10px 5px;
+            color: inherit;
+            display: flex;
+            align-items: center;
+        }
+
+        #options h1 {
+            padding: 10px 0;
+            text-align: center
+        }
+
+        #options .number_input {
+            outline: none;
+            border: none;
+            color: #fff;
+            width: 5em;
+            padding: 5px 5px;
+            margin: 0 5px;
+            background-color: rgba(0, 0, 0, 0);
+            border-bottom: 1px solid #b6b5b5;
+        }
+
+        #options .text_input {
+            outline: none;
+            border: none;
+            color: #fff;
+            width: 10em;
+            padding: 5px 5px;
+            margin: 0 5px;
+            background-color: rgba(0, 0, 0, 0);
+            border-bottom: 1px solid #b6b5b5;
+        }
+
+        #options button {
+            background-color: #2b2a2d;
+            border: none;
+            margin: 0 auto;
+            width: 15em;
+            height: 3em;
+            border: 1px solid #3a393a;
+        }
+
+        #options button:hover {
+            cursor: pointer;
+            background-color: #3a393a;
+            border: none;
+            margin: 0 auto;
+            width: 15em;
+            height: 3em;
+            border: 1px solid #3a393a;
+        }
+
+        input[type=checkbox] {
+            height: 20px;
+            width: 20px;
+            margin: 0 5px 0 0;
+        }
+
+        #tip {
+            position: absolute;
+            bottom: 10px;
+            color: #717171;
+            font-size: 12px;
+        }
+    </style>
+
+</head>
+
+<body onmouseover="document.getElementById('res').focus()">
+
+    <div id="info">
+
+
+        <div>已开始 0 秒</div>
+        <div>总点击 0 秒</div>
+        <div>正确 0 次</div>
+        <div>错误 0 次</div>
+        <div>平均每秒 NaN 题</div>
+        <div>正确率 NaN %</div>
+        <div>答题模式 1 标准模式</div>
+        <div>第一参数区间 0 - 10 </div>
+        <div>第二参数区间0 - 10</div>
+        <div>第三参数区间null - null</div>
+        <div>全部加法true</div>
+        <div>全部减法true</div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <div id="box">
+        <div>
+            <h1 onclick="setting_open()">算数练习</h1>
+            <h6 id="mode">标准模式</h6>
+        </div>
+        <div><span id="result">1+10</span></div>
+        <div><span>=</span></div>
+        <div><input id="res" autocomplete="false" placeholder="点击开始然后输入结果然后回车确定" type="text" autofocus></div>
+
+        <div id="select_mode">
+            <span>模式选择</span>
+            <i class="i-0" onclick="question(0)">1</i>
+            <i class="i-0" onclick="question(1)">2</i>
+            <i class="i-0" onclick="question(2)">3</i>
+            <i class="i-0" onclick="question(3)">4</i>
+        </div>
+
+        <div id="start"><button>开始</button></div>
+
+        <i id="help" onclick="help()">?</i>
+
+        <div id="daojishi"><span id="daojishi1">5</span></div>
+
+        <div id="tip">点击“算数练习”四个大字可以解锁设置页面!</div>
+    </div>
+    <div id="statistical">
+        <div><span>统计: <span id="st1">0</span> 题</span><span>正确率: <span id="st2">100</span> %</span><span>用时: <span
+                    id="st3">0 s</span> </span></div>
+    </div>
+
+
+
+
+    <div id="setting">
+        <div id="options">
+            <h1>设置</h1>
+            <div>第一个数字区间:
+                <input id="v1" autocomplete="false" name="test_no_name" class="number_input" type="text" value="0">
+                <input id="v2" autocomplete="false" name="test_no_name" class="number_input" type="text" value="10">
+            </div>
+            <div>第二个数字区间:
+                <input id="v3" autocomplete="false" name="test_no_name" class="number_input" type="text" value="0">
+                <input id="v4" autocomplete="false" name="test_no_name" class="number_input" type="text" value="10">
+            </div>
+            <div>第三个数字区间:
+                <input id="v5" autocomplete="false" name="test_no_name" class="number_input" type="text" value="null">
+                <input id="v6" autocomplete="false" name="test_no_name" class="number_input" type="text" value="null">
+            </div>
+            <div> <input type="checkbox" id="v7" checked> 表达式带有 + 号</div>
+            <div> <input type="checkbox" id="v8" checked> 表达式带有 - 号</div>
+            <div> <input type="checkbox" id="v9" checked> 高级信息</div>
+            <div>挑战模式秒数:<input id="v10" autocomplete="false" placeholder="一定别留空!!!!!" name="test_no_name"
+                    class="text_input" type="text" value="2">
+            </div>
+            <div><button onclick="options_ok()">确定</button></div>
+        </div>
+    </div>
+
+
+
+
+</body>
+
+</html>
+
+
+<script>
+
+    function def() {
+        clearInterval(st2);
+        clearInterval(timer);
+        document.getElementById('st1').innerText = 0;
+        document.getElementById('st2').innerText = 100;
+        document.getElementById('st3').innerText = "0 s";
+        clearTimeout(st1);
+    }
+
+    var config = {
+        '高级信息': true,
+        "答题模式": 1,
+        "答题模式翻译": ['标准模式', "挑战模式", "练习模式", "背题模式"],
+        "挑战模式秒数": 2,
+        "生成模式": 2
+    };
+    // 答题模式1:标准模式 问-答-下一题 时间自动流动
+    // 答题模式2:挑战模式 问-答-下一题 2s换一道题 换题之前没答案算错
+    // 答题模式3 练习模式 当输入框为空的情况下 第一次回车表示显示答案 第二次回车表示下一题
+    // 答题模式4 背题模式 题目生成时自动计算答案
+
+
+
+    // 总点击提交次数
+    var click_enter_count = 0;
+    // 答题时间
+    var time = 0;
+    // 答对的次数
+    var cilck_ok = 0;
+
+    // 模式2计时器
+    var set1 = '';
+    // 全局定时器
+    var timer = '';
+    // 是否点击了开始
+    var start_stare = false;
+    // 高级信息计时器
+    var info_set = '';
+
+    window.onload = () => {
+        // 初始化
+        document.getElementById('res').value = "";
+
+
+
+        if (get_cookie('question') == null) {
+            question(0);
+        }
+
+
+        question(get_cookie('question'));
+        config['挑战模式秒数'] = get_cookie('v10');
+        var options = JSON.parse(get_cookie('options'), true);
+        for (const key in options) {
+
+
+            var t = document.getElementById(key);
+            if (t.getAttribute('type') == "text") {
+                t.value = options[key];
+            } else if (t.getAttribute('type') == "checkbox") {
+                t.checked = options[key];
+            }
+        }
+
+        expr_gen();
+
+        if (get_cookie('v9') == 'true') {
+            document.getElementById('info').style.display = 'block';
+            info_set = setInterval(() => {
+                info();
+            }, 1000);
+        }
+
+
+
+
+
+
+    };
+
+    // 监听键盘事件 回车和空格提交
+    document.addEventListener("keydown", function (event) {
+        // 检查是否按下了回车键
+        if (event.keyCode === 13 || event.keyCode === 32) {
+
+
+            if (!start_stare) {
+                alert('请先点击开始再答题');
+                return;
+            }
+
+
+
+            if (config["答题模式"] == 3) {
+                // 答题模式3
+                let res = document.getElementById('res');
+                if (res.value == "") {
+                    res.value = eval(document.getElementById('result').innerText);
+                    return;
+                }
+            }
+
+            // 执行计算函数
+            calc();
+            // 清空答题区域
+
+        }
+    });
+
+
+    // 答题区域焦点获取
+    document.addEventListener("mouseover", function (event) {
+        document.getElementById('res').focus();
+    });
+
+    // 计算函数 判断是否答对
+    function calc() {
+
+        if (!start_stare) {
+
+            return;
+        }
+
+
+        clearTimeout(set1);
+        let res = document.getElementById('res').value;
+        let result = document.getElementById('result').innerText;
+
+        if (config['答题模式'] == 4) {
+            result = 0;
+            res = 0;
+
+        }
+
+
+        result = eval(result);
+        // 增加答题次数
+        click_enter_count++;
+        // 同步统计次数
+
+
+        if (Number(res) == result) {
+            ok();
+            cilck_ok++;
+        } else {
+            no();
+        }
+
+        // 正确率的计算
+        let st1 = document.getElementById('st1').innerText;
+        let st2 = document.getElementById('st2').innerText = Math.floor(cilck_ok / click_enter_count * 100);
+        document.getElementById('st1').innerText = click_enter_count;
+
+        if (config['答题模式'] == 2) {
+            set1 = setTimeout(() => {
+                calc();
+            }, config['挑战模式秒数'] * 1000);
+        }
+        // 清空答题区域
+        document.getElementById('res').value = "";
+        expr_gen();
+    }
+
+
+
+
+
+
+    function convertTime(time) {
+        if (time < 60) {
+            return time + ' s';
+        } else {
+            var minutes = Math.floor(time / 60);
+            var seconds = time % 60;
+
+            if (minutes < 60) {
+                return minutes + 'm' + seconds + 's';
+            } else {
+                var hours = Math.floor(minutes / 60);
+                minutes = minutes % 60;
+                return hours + 'h' + minutes + 'm' + seconds + 's';
+            }
+        }
+    }
+
+    function expr_gen() {
+
+        function random_n(min, max) {
+            min = Number(min);
+            max = Number(max);
+            // 获取 min 和 max 之间的随机数（包括 min 和 max）
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+
+        var options = get_cookie('options');
+        options = JSON.parse(options);
+
+        var num1 = random_n(options['v1'], options['v2']);
+        var num2 = random_n(options['v3'], options['v4']);
+        var num3 = null;
+        var t1, t2, t3;
+
+        if (options['v3'] != null) {
+            num3 = random_n(options['v5'], options['v6']);
+        }
+
+
+
+        var symbols = []; // 存储符号的数组
+
+        if (options['v7']) {
+            symbols.push('+');
+        }
+
+        if (options['v8']) {
+            symbols.push('-');
+        }
+
+        var symbol = symbols[Math.floor(Math.random() * symbols.length)];
+        var symbol1 = symbols[Math.floor(Math.random() * symbols.length)];
+        var fun = num1 + symbol + num2;
+
+
+        if (options['v5'] != "null" && options['v6'] != "null") {
+            fun = fun + symbol + num3;
+        }
+
+
+        if (config['答题模式'] == 4) {
+            document.getElementById('result').innerText = `${fun} = ${eval(fun)}`;
+
+        } else {
+            document.getElementById('result').innerText = `${fun}`;
+        }
+
+
+
+
+    }
+
+
+
+    function no() {
+        document.getElementById('box').style.boxShadow = '0px 0px 5px #F56C6C';
+        setTimeout(() => {
+            document.getElementById('box').style.boxShadow = '';
+
+        }, 1000);
+    }
+    function ok() {
+        document.getElementById('box').style.boxShadow = '0px 0px 5px #67C23A';
+        setTimeout(() => {
+            document.getElementById('box').style.boxShadow = '';
+
+        }, 1000);
+    }
+
+
+
+
+
+    function info() {
+        let t = (click_enter_count / time).toFixed(1);
+        let c = Math.floor(cilck_ok / click_enter_count * 100);
+        document.getElementById('info').innerHTML = "";
+        document.getElementById('info').innerHTML += `<div>已开始 ${time} 秒</div>`;
+        document.getElementById('info').innerHTML += `<div>总点击 ${click_enter_count} 秒</div>`;
+        document.getElementById('info').innerHTML += `<div>正确 ${cilck_ok} 次</div>`;
+        document.getElementById('info').innerHTML += `<div>错误 ${click_enter_count - cilck_ok} 次</div>`;
+        document.getElementById('info').innerHTML += `<div>平均每秒 ${t} 题</div>`;
+        document.getElementById('info').innerHTML += `<div>正确率 ${c} %</div>`;
+        document.getElementById('info').innerHTML += `<div>答题模式 ${config['答题模式']} ${config['答题模式翻译'][config["答题模式"] - 1]}</div>`;
+        document.getElementById('info').innerHTML += `<div>第一参数区间 ${get_cookie('v1')} - ${get_cookie('v2')} </div>`;
+        document.getElementById('info').innerHTML += `<div>第二参数区间${get_cookie('v3')} - ${get_cookie('v4')}</div>`;
+        document.getElementById('info').innerHTML += `<div>第三参数区间${get_cookie('v5')} - ${get_cookie('v6')}</div>`;
+        document.getElementById('info').innerHTML += `<div>全部加法${get_cookie('v7')}</div>`;
+        document.getElementById('info').innerHTML += `<div>全部减法${get_cookie('v8')}</div>`;
+
+    }
+
+
+
+
+
+
+
+
+    const inputElement = document.getElementById('res');
+    inputElement.addEventListener('input', function (event) {
+        const inputValue = event.target.value;
+        const cleanedValue = inputValue.replace(/[^0-9-]/g, '');
+        event.target.value = cleanedValue;
+    });
+
+
+
+    function help() {
+        alert(`
+        答题模式1:标准模式 问-答-下一题 时间自动流动
+
+        答题模式2:挑战模式 问-答-下一题 2s换一道题 换题之前没答案算错
+
+        答题模式3 练习模式 当输入框为空的情况下 第一次回车表示显示答案 第二次回车表示下一题
+        
+        答题模式4 背题模式 题目生成时自动计算答案
+`);
+    }
+
+
+
+
+
+
+    function question(type) {
+
+
+
+        document.getElementById('daojishi1').innerText = 5;
+        var click_enter_count = 0;
+        // 答题时间
+        var time = 0;
+        // 答对的次数
+        var cilck_ok = 0;
+        // 模式2计时器
+        var set1 = '';
+        // 全局定时器
+
+        clearInterval(timer);
+        // clearInterval(set2);
+        def();
+
+        start_stare = false;
+        type = Number(type);
+        set_cookie('question', type, -1);
+        config['答题模式'] = type + 1;
+
+
+
+
+        document.getElementById('mode').innerText = config['答题模式翻译'][type];
+        expr_gen();
+        // alert("切换成功,点击开始进行答题!");
+        ok();
+
+        // 获取所有 class 为 "i-0" 的元素
+        var elements = document.querySelectorAll('.i-0');
+
+        // 循环遍历元素列表
+        for (var i = 0; i < elements.length; i++) {
+            var element = elements[i];
+
+            if (i === type) {
+                // 将与 type 序号相等的元素添加 "aced" class
+                element.classList.add('aced');
+            } else {
+                // 删除其他元素中已存在的 "aced" class
+                element.classList.remove('aced');
+            }
+        }
+
+
+
+
+    }
+
+
+
+
+
+
+    document.getElementById('start').addEventListener('click', start);
+
+
+    function start() {
+
+        if (start_stare == true) {
+            return;
+        }
+
+        start_stare = true;
+        document.getElementById('res').value = '';
+        expr_gen();
+
+        document.getElementById('res').readOnly = true;
+        // 总点击次数
+        click_enter_count = 0;
+        // 答题时间
+        time = 0;
+        // 答对的次数
+        cilck_ok = 0;
+        let t = 5;
+        document.getElementById('daojishi').style.display = "flex";
+        let set2 = setInterval(() => {
+
+            t--;
+            if (t <= 0) {
+                timer = setInterval(() => {
+                    time++;
+                    document.getElementById('st3').innerText = convertTime(time);
+                    document.getElementById('res').focus();
+                }, 1000);
+
+                document.getElementById('res').readOnly = false;
+                document.getElementById('daojishi').style.display = "none";
+
+                if (config['答题模式'] == 2) {
+                    set1 = setTimeout(() => {
+                        calc();
+                    }, config['挑战模式秒数'] * 1000);
+                }
+                clearInterval(set2);
+            }
+            document.getElementById('daojishi1').innerText = t;
+        }, 1000);
+    }
+
+
+
+
+    function options_ok() {
+
+        var options = {};
+        for (let i = 1; i < 11; i++) {
+
+            // options[`v${i}`] =
+            let a = document.getElementById(`v${i}`);
+            if (a.getAttribute("type") === "text") {
+                if (a.value == '') {
+                    a.value = Math.floor(Math.random() * 100);
+                }
+
+
+
+                options[`v${i}`] = a.value;
+                set_cookie(`v${i}`, a.value, -1);
+            } else if (a.getAttribute("type") === "checkbox") {
+
+
+                options[`v${i}`] = a.checked;
+                set_cookie(`v${i}`, a.checked, -1);
+            }
+
+            if (!options['v7'] && !options['v8']) {
+                options['v7'] = true;
+            }
+
+
+        }
+        set_cookie('options', JSON.stringify(options), -1);
+
+        expr_gen();
+        document.getElementById('setting').style.display = 'none';
+        if (get_cookie('v9') == 'true') {
+            document.getElementById('info').style.display = 'block';
+            info_set = setInterval(() => {
+                info();
+
+            }, 1000);
+        } else {
+            clearInterval(info_set);
+            document.getElementById('info').style.display = 'none';
+        }
+    }
+
+
+    function setting_open() {
+        document.getElementById('setting').style.display = 'flex';
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+<script>
+    /**
+         *
+         * @param {*} name 要获取cookie的名称
+         * @returns
+         */
+    function get_cookie(name) {
+        // 获取所有cookie项（用分号+空格分隔）
+        var cookies = document.cookie.split("; ");
+
+        // 遍历每个cookie，查找目标名称的cookie
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i];
+
+            // 判断此cookie是否为目标名称的cookie
+            if (cookie.indexOf(name + "=") === 0) {
+                // 如果是，则返回cookie值
+                return decodeURIComponent(cookie.substring(name.length + 1));
+            }
+        }
+
+        // 如果未找到目标cookie，则返回null
+        return null;
+    }
+
+    /**
+     *
+     * @param {string} name 要设置的cookie名称
+     * @param {string} value 要设置的值
+     * @param {number} days 设置的时间 单位 天 默认为会话级别
+     */
+
+    function set_cookie(name, value, days) {
+        var expires = "";
+
+        if (days) {
+            if (days === -1) {
+                // 设置为永不过期
+                expires = "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+            } else {
+                var date = new Date();
+                date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                expires = "; expires=" + date.toUTCString();
+            }
+        }
+
+        document.cookie = name + "=" + encodeURIComponent(value) + expires + "; path=/";
+    }
+
+    var tips = [
+        '点击“算数练习”四个大字可以解锁设置页面!',
+        '背题模式可以自动计算结果喔！',
+        '其实挑战模式是可以自定义换题时间的！',
+        '点击右上角的“?”号可以查看不同模式的解释喔~',
+        '空格也可以提交！没想到吧！右手数字左手空格提交！'
+    ];
+    setInterval(() => {
+        document.getElementById('tip').innerText = tips[Math.floor(Math.random() * tips.length)];
+    }, 5000);
+
+
+
+</script>
